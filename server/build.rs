@@ -1,4 +1,6 @@
 fn main() {
+    println!("cargo:rerun-if-env-changed=STREAM_SERVER_SKIP_WINDOWS_RESOURCES");
+
     if let Ok(output) = std::process::Command::new("git")
         .args(["rev-parse", "--short", "HEAD"])
         .output()
@@ -10,7 +12,12 @@ fn main() {
     }
 
     let target_os = std::env::var("CARGO_CFG_TARGET_OS").unwrap_or_default();
-    if target_os == "windows" {
+    // The server crate is also embedded as a library by desktop clients. Its
+    // standalone EXE resources must not propagate into the host executable,
+    // where they would collide with the host's VERSIONINFO/icon/manifest.
+    let skip_windows_resources =
+        std::env::var_os("STREAM_SERVER_SKIP_WINDOWS_RESOURCES").is_some();
+    if target_os == "windows" && !skip_windows_resources {
         use chrono::Datelike;
         let now = chrono::Local::now();
         let copyright = format!("Copyright © {} Perpetus", now.year());
