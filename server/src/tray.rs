@@ -191,7 +191,7 @@ pub fn create_system_tray(event_loop: &EventLoop<UserEvent>) -> anyhow::Result<T
     let stats_item = MenuItem::new("↓ -- | ↑ -- | 0 peers", false, None);
 
     // --- Action items ---
-    let open_item = MenuItem::new("Open Stremio Web", true, None);
+    let open_item = MenuItem::new("Open StremDoBem Web", true, None);
     let settings_item = MenuItem::new("Open settings", true, None);
     let logs_item = MenuItem::new("Open Logs Folder", true, None);
     let restart_item = MenuItem::new("Restart Server", true, None);
