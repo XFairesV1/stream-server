@@ -1,4 +1,6 @@
 use crate::engine::Engine;
+#[cfg(all(feature = "librqbit", not(feature = "libtorrent")))]
+use crate::backend::priorities::EngineCacheConfig;
 use anyhow::Result;
 use std::collections::HashMap;
 use std::sync::Arc;
